@@ -1,0 +1,38 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+	  
+    <Nullable>enable</Nullable>
+    <OutputType>Library</OutputType>
+	<NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
+
+	<PackageId>WebCLI</PackageId>
+	<Version>1.0.0</Version>
+	<Authors>Viacheslav Vodianov</Authors>
+	<Company>SOZAP AB (publ)</Company>
+	<Description>Provides terminal-like looking UI to execute commands inside AspNetCore application.</Description>
+	<PackageTags>.net;aspnetcore;terminal;cli;web;ui;admin</PackageTags>
+	<RepositoryUrl>https://github.com/Sozap-AB/WebCLI</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\index.html" />
+    <None Remove="Resources\jquery.min.js" />
+    <None Remove="Resources\jquery.terminal.min.css" />
+    <None Remove="Resources\jquery.terminal.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\index.html" />
+    <EmbeddedResource Include="Resources\jquery.min.js" />
+    <EmbeddedResource Include="Resources\jquery.terminal.min.css" />
+    <EmbeddedResource Include="Resources\jquery.terminal.min.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
+  </ItemGroup>
+
+</Project>

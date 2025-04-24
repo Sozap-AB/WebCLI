@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35913.81
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCLI", "WebCli\WebCLI.csproj", "{F887A948-7A6F-42DB-89B2-8D72DADA6E33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebCLI.Examples", "WebCLI.Examples\WebCLI.Examples.csproj", "{21107EC6-CFDE-4405-8BE7-28232A1F2C4C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F887A948-7A6F-42DB-89B2-8D72DADA6E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F887A948-7A6F-42DB-89B2-8D72DADA6E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F887A948-7A6F-42DB-89B2-8D72DADA6E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F887A948-7A6F-42DB-89B2-8D72DADA6E33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21107EC6-CFDE-4405-8BE7-28232A1F2C4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21107EC6-CFDE-4405-8BE7-28232A1F2C4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21107EC6-CFDE-4405-8BE7-28232A1F2C4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21107EC6-CFDE-4405-8BE7-28232A1F2C4C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5BB4B340-1252-4ADB-A4B2-E25C789256B0}
+	EndGlobalSection
+EndGlobal

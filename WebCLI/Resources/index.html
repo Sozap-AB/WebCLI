@@ -1,0 +1,114 @@
+﻿<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Web CLI</title>
+    <!-- third_party_start -->
+    <script src="https://cdn.jsdelivr.net/npm/jquery"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/2.44.1/js/jquery.terminal.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jquery.terminal/2.44.1/css/jquery.terminal.min.css" rel="stylesheet" />
+    <!-- third_party_end -->
+    <script>
+        jQuery(function ($) {
+            const CONTROL_MESSAGE_INTERRUPT = 'INTERRUPT';
+
+            const SYS_MESSAGE_FINISHED = 'FINISHED';
+            const SYS_MESSAGE_PING = 'PING';
+            const SYS_MESSAGE_PONG = 'PONG';
+
+            var params = '<PARAMS>';
+
+            socket = new WebSocket(window.location.pathname + "/ws");
+
+            function sendMessage(message) {
+                if (socket && socket.readyState === WebSocket.OPEN) {
+                    socket.send(message);
+                }
+            }
+
+            function sendControlMessage(message) {
+                if (!terminal.paused()) {
+                    return;
+                }
+
+                sendMessage(message);
+            }
+
+            function sendSysMessage(message) {
+                sendMessage(message);
+            }
+
+            function processServerOutput(rawData) {
+                rawData = rawData.replaceAll("\r\n", "\n");
+
+                if (!rawData.includes("\r")) {
+                    terminal.echo(rawData);
+                } else {
+                    var data = rawData.split("\r");
+
+                    if (data[0] !== "") {
+                        terminal.echo(data[0]);
+                    }
+
+                    for (var i = 1; i < data.length; i++) {
+                        if (data[i] !== "") {
+                            terminal.update(-1, data[i]);
+                        } else {
+                            terminal.remove_line(-1);
+                        }
+                    }
+                }
+            }
+
+            var terminal = $('#term').terminal(function (command, term) {
+                if (command !== '') {
+                    sendMessage(command);
+                }
+
+                term.pause();
+            }, {
+                greetings: params.greetings,
+                name: 'js_terminal',
+                height: '100%',
+                width: '100%',
+                prompt: params.prompt + '> ',
+                pauseEvents: false,
+                keydown(e) {
+                    if (this.paused() && e.ctrlKey && e.key === 'Q') {
+                        sendControlMessage(CONTROL_MESSAGE_INTERRUPT);
+
+                        return true;
+                    }
+                }
+            });
+
+            socket.onopen = () => {
+                terminal.echo("Connected to server.");
+            };
+
+            socket.onmessage = (event) => {
+                switch (event.data) {
+                    case SYS_MESSAGE_FINISHED:
+                        terminal.resume();
+
+                        return;
+                    case SYS_MESSAGE_PING:
+                        sendSysMessage(SYS_MESSAGE_PONG);
+
+                        return;
+                    default:
+                        processServerOutput(event.data);
+                }
+            };
+
+            socket.onclose = () => {
+                terminal.echo("Connection closed, to connect again, please, refresh page.");
+            };
+        });
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body class="full-screen-terminal">
+    <div id="term"></div>
+</body>
+</html>
