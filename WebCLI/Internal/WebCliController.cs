@@ -53,7 +53,7 @@ namespace WebCli.Internal
 
         private byte[] RenderIndexPage()
         {
-            var template = ReadResourceAsString("WebCli.Resources.index.html");
+            var template = ReadResourceAsString("WebCLI.Resources.index.html");
 
             template = template.Replace(
                 "'<PARAMS>'",
@@ -69,9 +69,9 @@ namespace WebCli.Internal
             if (!Options.UseCDN)
             {
                 var replacement = $"""
-                    <script>{ReadResourceAsString("WebCli.Resources.jquery.min.js")}</script>
-                    <script>{ReadResourceAsString("WebCli.Resources.jquery.terminal.min.js")}</script>
-                    <style>{ReadResourceAsString("WebCli.Resources.jquery.terminal.min.css")}</style>
+                    <script>{ReadResourceAsString("WebCLI.Resources.jquery.min.js")}</script>
+                    <script>{ReadResourceAsString("WebCLI.Resources.jquery.terminal.min.js")}</script>
+                    <style>{ReadResourceAsString("WebCLI.Resources.jquery.terminal.min.css")}</style>
                 """;
 
                 template = Regex.Replace(
