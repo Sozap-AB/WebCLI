@@ -188,23 +188,22 @@ namespace WebCli.Internal
                 settings.HelpWriter = helpWriter;
             });
 
+            using var scope = ServiceProvider.CreateScope();
+
             var clResult = parser.ParseArguments(SplitArguments(input), OptionsCommandTypesMap.Keys.ToArray())
                 .WithParsed(delegate (object options)
                 {
-                    using (var scope = ServiceProvider.CreateScope())
-                    {
-                        var command = scope.ServiceProvider.GetRequiredService(
-                            OptionsCommandTypesMap[options.GetType()]
-                        );
+                    var command = scope.ServiceProvider.GetRequiredService(
+                        OptionsCommandTypesMap[options.GetType()]
+                    );
 
-                        result = (IAsyncEnumerable<string>)
-                            command
-                                .GetType()
-                                .GetMethod(
-                                    nameof(CommandBase<object>.ExecuteAsync),
-                                    [options.GetType(), typeof(ControlMessageReader)]
-                                )!.Invoke(command, [options, cmr])!;
-                    }
+                    result = (IAsyncEnumerable<string>)
+                        command
+                            .GetType()
+                            .GetMethod(
+                                nameof(CommandBase<object>.ExecuteAsync),
+                                [options.GetType(), typeof(ControlMessageReader)]
+                            )!.Invoke(command, [options, cmr])!;
 
                 });
 
