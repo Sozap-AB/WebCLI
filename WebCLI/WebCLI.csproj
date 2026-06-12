@@ -23,6 +23,7 @@
     <None Remove="Resources\jquery.min.js" />
     <None Remove="Resources\jquery.terminal.min.css" />
     <None Remove="Resources\jquery.terminal.min.js" />
+    <None Remove="Resources\autocomplete_menu.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -30,6 +31,7 @@
     <EmbeddedResource Include="Resources\jquery.min.js" />
     <EmbeddedResource Include="Resources\jquery.terminal.min.css" />
     <EmbeddedResource Include="Resources\jquery.terminal.min.js" />
+    <EmbeddedResource Include="Resources\autocomplete_menu.js" />
   </ItemGroup>
 
   <ItemGroup>

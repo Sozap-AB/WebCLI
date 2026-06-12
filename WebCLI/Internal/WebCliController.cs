@@ -18,6 +18,8 @@ namespace WebCli.Internal
     {
         private readonly TimeSpan PING_PONG_EXECUTION_TIME_LIMIT = TimeSpan.FromSeconds(2);
 
+        private readonly string[] BUILT_IN_COMMANDS = ["help", "version"];
+
         private WebCliOptions Options { get; }
         private IDictionary<Type, Type> OptionsCommandTypesMap { get; }
         private IServiceProvider ServiceProvider { get; }
@@ -66,11 +68,21 @@ namespace WebCli.Internal
                 )
             );
 
+            template = template.Replace(
+                "['<COMMANDS>']",
+                System.Text.Json.JsonSerializer.Serialize(
+                    OptionsCommandTypesMap
+                        .Select(x => x.Key.GetCustomAttribute<VerbAttribute>()!.Name)
+                        .AppendRange(BUILT_IN_COMMANDS)
+                )
+            );
+
             if (!Options.UseCDN)
             {
                 var replacement = $"""
                     <script>{ReadResourceAsString("WebCLI.Resources.jquery.min.js")}</script>
                     <script>{ReadResourceAsString("WebCLI.Resources.jquery.terminal.min.js")}</script>
+                    <script>{ReadResourceAsString("WebCLI.Resources.autocomplete_menu.js")}</script>
                     <style>{ReadResourceAsString("WebCLI.Resources.jquery.terminal.min.css")}</style>
                 """;
 
